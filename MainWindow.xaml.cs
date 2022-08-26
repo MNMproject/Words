@@ -739,5 +739,15 @@ namespace Words
                 VizorPath.Text = folderDialog.SelectedPath;
             }   
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var timer = new System.Windows.Threading.DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.IsEnabled = true;
+            timer.Tick += (start, t) => { Time.Text = DateTime.Now.ToLongTimeString(); };
+            timer.Tick += (o, t) => { Date.Text = DateTime.Now.ToLongDateString(); };
+            timer.Start();
+        }
     }
 }

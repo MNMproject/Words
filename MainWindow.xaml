@@ -15,11 +15,17 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.18*"/>
+                <ColumnDefinition Width="0.18*"/>
                 <ColumnDefinition Width="0.08*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Добавить запретное слово в список" Grid.Row="0" Grid.Column="0"/>
-            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" SpellCheck.IsEnabled="True" Language="ru-ru" Background="AliceBlue"/>
-            <Button x:Name="Enter" Content="Ввод" Click="Enter_Click" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" />
+            <Label Content="Сегодня: " Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="Date" Grid.Row="0" Grid.Column="2" Loaded="Window_Loaded"/>
+            <TextBlock x:Name="Time" Width="100" Grid.Row="0" Grid.Column="3"/>
+            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" SpellCheck.IsEnabled="True" Language="ru-ru" Background="AliceBlue"/>
+            <Button x:Name="Enter" Content="Ввод" Click="Enter_Click" Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" />
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
