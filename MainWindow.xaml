@@ -12,7 +12,7 @@
         <ResourceDictionary Source="Styles.xaml"/>
     </Window.Resources>
     <StackPanel Style="{StaticResource StyleBacground}" >
-        <Menu Height="20" VerticalAlignment="Top" >
+        <Menu Height="20" VerticalAlignment="Top" Cursor="Help" >
             <MenuItem Header="Настройки">
                 <MenuItem Header="Задать папку для поиска" Click="SetDirectory_Click"/>
                 <MenuItem Header="Задать папку с запретными словами" Click="DirectoryForbidden"/>
@@ -59,11 +59,15 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Выбрана директория:" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
             <TextBlock x:Name="VizorPath" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleTextBlock}"/>
+            <Label Content="Сохранено:" Grid.Row="0" Grid.Column="2" Style="{StaticResource StyleLabel}"/>
+            <TextBlock x:Name="VizorPathForbidden" Grid.Row="0" Grid.Column="3" Style="{StaticResource StyleTextBlock}"/>
         </Grid>
         <Grid >
             <Grid.RowDefinitions>

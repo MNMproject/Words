@@ -211,6 +211,7 @@ namespace Words
             if (File.Exists("config.json"))
             {
                 VizorPath.Text = ListConfig[ListConfig.Count-1].path;
+                VizorPathForbidden.Text = ListConfig[ListConfig.Count - 1].pathForbidden;
             }
         }
 
@@ -759,6 +760,7 @@ namespace Words
             if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 SaveLoad.SaveConfigDirectoryForbidden(folderDialog);
+                VizorPathForbidden.Text = folderDialog.SelectedPath;
             }
         }
     }
