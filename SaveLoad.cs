@@ -41,15 +41,42 @@ namespace Words
         public static void LoadConfig(List<ConfigList> templist)
         {
             ListConfig.Clear();
-            //if (File.Exists("config.json"))
-            //{
+            if (File.Exists("config.json"))
+            {
                 var json = File.ReadAllText("config.json");
                 var loading = JsonConvert.DeserializeObject<List<ConfigList>>(json);
                 foreach (var list in loading)
                 {
                     templist.Add(list);
                 }
-            //}
+            }
+        }
+
+        public static void SaveConfigDirectory(System.Windows.Forms.FolderBrowserDialog folderDialog)
+        {
+            ConfigList config = new();
+            config.dateTime = DateTime.Now;
+            config.path = folderDialog.SelectedPath.ToString();
+            if (ListConfig.Count > 0)
+            {
+                config.pathForbidden = ListConfig[ListConfig.Count - 1].pathForbidden;
+            }
+            ListConfig.Add(config);
+            SaveConfig();
+        }
+
+        public static void SaveConfigDirectoryForbidden(System.Windows.Forms.FolderBrowserDialog folderDialog)
+        {
+            ConfigList config = new();
+            config.dateTime = DateTime.Now;
+            config.path = ListConfig[ListConfig.Count - 1].path;
+            config.pathForbidden = folderDialog.SelectedPath.ToString();
+            if (ListConfig.Count > 0)
+            {
+                config.path = ListConfig[ListConfig.Count - 1].path;
+            }
+            ListConfig.Add(config);
+            SaveConfig();
         }
     }
 }

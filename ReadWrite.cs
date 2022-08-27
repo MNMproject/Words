@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Words
 {
-    class ReadWrite
+    class ReadWrite : MainWindow
     {
         public static string ReadTXT(string file)
         {
@@ -86,14 +86,14 @@ namespace Words
         public async static void WriteLogStatisticAsync()
         {
             string data = LogStatistic.Statistic();
-            await File.AppendAllTextAsync("C:/Users/admin/Desktop/ЭкзаменСлова/ForbiddenWordLog.txt", data);
+            await File.AppendAllTextAsync(@$"{ListConfig[ListConfig.Count-1].pathForbidden}/ForbiddenWordLog.txt", data);
         }
 
         public async static void WriteLogToFileAsync(FileList file, string word)
         {
             LogStatistic.ListLogCount(file.File, word);
             string data = WriteLog(file, word);
-            await File.AppendAllLinesAsync("C:/Users/admin/Desktop/ЭкзаменСлова/ForbiddenWordLog.txt", new[] { data });
+            await File.AppendAllLinesAsync(@$"{ListConfig[ListConfig.Count - 1].pathForbidden}/ForbiddenWordLog.txt", new[] { data });
         }
 
         public static string WriteLog(FileList file, string word)

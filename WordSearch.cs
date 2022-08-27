@@ -54,7 +54,7 @@ namespace Words
                     if (/*forbiddenWord.ToLower() == word.ToLower()*/ tasks[i].Result != "")
                     {
                         ReadWrite.WriteLogToFileAsync(file, word);
-                        ReadWrite.WriteTextToFileAsync(ReadWrite.ReadTXT(file.File), $"C:/Users/admin/Desktop/ЭкзаменСлова/{file.FileName}");
+                        ReadWrite.WriteTextToFileAsync(ReadWrite.ReadTXT(file.File), $"{ListConfig[ListConfig.Count - 1].pathForbidden}/{file.FileName}");
                         words = WordToStar(word);
                     }
                     i++;

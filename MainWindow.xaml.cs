@@ -157,6 +157,7 @@ namespace Words
     {
         public DateTime dateTime { get; set; }
         public string path { get; set; }
+        public string pathForbidden { get; set; }
     }
 
     public partial class MainWindow : Window
@@ -254,9 +255,9 @@ namespace Words
                     save = save.Remove(save.Length - 1);
                 }
             }
-            if(save != "" && save.Length > 1)
+            if((save != "" || save != " ") && save.Length > 2)
             {
-                StreamWriter data = new("C:/Users/admin/Desktop/ЭкзаменСлова/ForbiddenWord.txt", true);
+                StreamWriter data = new(@$"{ListConfig[ListConfig.Count-1].pathForbidden}/ForbiddenWord.txt", true);
                 data.WriteLine(save);
                 data.Close();
                 ForbidenWordsList.Add(save);
@@ -736,11 +737,7 @@ namespace Words
             
             if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ConfigList config = new();
-                config.dateTime = DateTime.Now;
-                config.path = folderDialog.SelectedPath.ToString();
-                ListConfig.Add(config);
-                SaveLoad.SaveConfig();
+                SaveLoad.SaveConfigDirectory(folderDialog);
                 VizorPath.Text = folderDialog.SelectedPath;
             }   
         }
@@ -753,6 +750,16 @@ namespace Words
             timer.Tick += (start, t) => { Time.Text = DateTime.Now.ToLongTimeString(); };
             timer.Tick += (o, t) => { Date.Text = DateTime.Now.ToLongDateString(); };
             timer.Start();
+        }
+
+        private void DirectoryForbidden(object sender, RoutedEventArgs e)
+        {
+            var folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                SaveLoad.SaveConfigDirectoryForbidden(folderDialog);
+            }
         }
     }
 }

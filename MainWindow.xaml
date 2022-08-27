@@ -6,12 +6,18 @@
         xmlns:local="clr-namespace:Words" d:DataContext="{d:DesignInstance Type=local:FileList}" 
         mc:Ignorable="d"
         Title="Найдун" 
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width ="1100" Height="800">
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Width ="1100" Height="800">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml"/>
     </Window.Resources>
     <StackPanel Style="{StaticResource StyleBacground}" >
+        <Menu Height="20" VerticalAlignment="Top" >
+            <MenuItem Header="Настройки">
+                <MenuItem Header="Задать папку для поиска" Click="SetDirectory_Click"/>
+                <MenuItem Header="Задать папку с запретными словами" Click="DirectoryForbidden"/>
+            </MenuItem>
+        </Menu>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -46,7 +52,7 @@
             <Button x:Name="Diagram" Content="Диаграмма" Grid.Row="0" Grid.Column="2" Click="Diagram_Click" Style="{StaticResource StyleButton}" />
             <Button x:Name="OpenDirectory" Content="Открыть проводник" Grid.Row="1" Grid.Column="1" Click="OpenDirectory_Click" Style="{StaticResource StyleButton}"/>
             <Button x:Name="SetDirectory" Content="Задать директорию" Click="SetDirectory_Click" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleButton}" />
-            <Button x:Name="Clear" Content="Очистить" Click="Clear_Click" Grid.Row="1" Grid.Column="2" Style="{StaticResource StyleButton}" />
+            <Button x:Name="Clear" Content="Очистить" Click="Clear_Click" Grid.Row="1" Grid.Column="2" Style="{StaticResource StyleButton}"/>
         </Grid>
         <Grid >
             <Grid.RowDefinitions>
