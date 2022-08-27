@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Words" d:DataContext="{d:DesignInstance Type=local:FileList}" 
         mc:Ignorable="d"
         Title="Найдун" 
-        ResizeMode="NoResize" Height="800" Width="1100" WindowStartupLocation="CenterScreen">
-    <StackPanel Background="#FFF6F4E7">
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width ="1100" Height="800">
+
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <StackPanel Style="{StaticResource StyleBacground}" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -20,12 +24,12 @@
                 <ColumnDefinition Width="0.18*"/>
                 <ColumnDefinition Width="0.08*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Добавить запретное слово в список" Grid.Row="0" Grid.Column="0"/>
-            <Label Content="Сегодня: " Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="Date" Grid.Row="0" Grid.Column="2" Loaded="Window_Loaded"/>
-            <TextBlock x:Name="Time" Width="100" Grid.Row="0" Grid.Column="3"/>
-            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" SpellCheck.IsEnabled="True" Language="ru-ru" Background="AliceBlue"/>
-            <Button x:Name="Enter" Content="Ввод" Click="Enter_Click" Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" />
+            <Label Content="Добавить запретное слово в список" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}" HorizontalAlignment="Left"/>
+            <Label Content="Сегодня: " Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource StyleLabel}"/>
+            <TextBlock x:Name="Date" Grid.Row="0" Grid.Column="2" Loaded="Window_Loaded" Style="{StaticResource StyleTextBlock}"/>
+            <TextBlock x:Name="Time" Grid.Row="0" Grid.Column="3" Style="{StaticResource StyleTextBlock}"/>
+            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource StyleTextBox}" Cursor="Pen"/>
+            <Button x:Name="Enter" Content="Ввод" Click="Enter_Click" Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Style="{StaticResource StyleButton}"/>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -33,16 +37,16 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="SearchFolder" Content="Поиск файлов" Grid.Row="0" Grid.Column="0" Click="SearchFolder_Click"/>
-            <Button x:Name="SearchWord" Content="Найти слово" Grid.Row="1" Grid.Column="0" Click="SearchWord_Click"/>
-            <Button x:Name="Diagram" Content="Диаграмма" Grid.Row="0" Grid.Column="1" Click="Diagram_Click"/>
-            <Button x:Name="OpenDirectory" Content="Открыть проводник" Grid.Row="1" Grid.Column="1" Click="OpenDirectory_Click" />
-            <Button x:Name="SetDirectory" Content="Задать директорию" Click="SetDirectory_Click" Grid.Row="0" Grid.Column="3" />
-            <Button x:Name="Clear" Content="Очистить" Click="Clear_Click" Grid.Row="1" Grid.Column="3" />
+            <Button x:Name="SearchFolder" Content="Поиск файлов" Grid.Row="0" Grid.Column="0" Click="SearchFolder_Click" Style="{StaticResource StyleButton}"/>
+            <Button x:Name="SearchWord" Content="Найти слово" Grid.Row="1" Grid.Column="0" Click="SearchWord_Click" Style="{StaticResource StyleButton}" />
+            <Button x:Name="Diagram" Content="Диаграмма" Grid.Row="0" Grid.Column="2" Click="Diagram_Click" Style="{StaticResource StyleButton}" />
+            <Button x:Name="OpenDirectory" Content="Открыть проводник" Grid.Row="1" Grid.Column="1" Click="OpenDirectory_Click" Style="{StaticResource StyleButton}"/>
+            <Button x:Name="SetDirectory" Content="Задать директорию" Click="SetDirectory_Click" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleButton}" />
+            <Button x:Name="Clear" Content="Очистить" Click="Clear_Click" Grid.Row="1" Grid.Column="2" Style="{StaticResource StyleButton}" />
         </Grid>
         <Grid >
             <Grid.RowDefinitions>
@@ -52,8 +56,8 @@
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="Выбрана директория:" Grid.Row="0" Grid.Column="0"/>
-            <TextBlock x:Name="VizorPath" Grid.Row="0" Grid.Column="1"/>
+            <Label Content="Выбрана директория:" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
+            <TextBlock x:Name="VizorPath" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleTextBlock}"/>
         </Grid>
         <Grid >
             <Grid.RowDefinitions>
@@ -64,16 +68,16 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="Label_Folder" Content="Список Папок:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
-            <Label Content="Список Файлов:" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
-            <ListBox x:Name="Vizor1" SelectionChanged="Vizor1_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="0" Background="AliceBlue">
+            <Label x:Name="Label_Folder" Content="Список Папок:" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
+            <Label Content="Список Файлов:" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleLabel}"/>
+            <ListBox x:Name="Vizor1" SelectionChanged="Vizor1_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FolderUp}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="Vizor2" SelectionChanged="Vizor2_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="1" Background="AliceBlue">
+            <ListBox x:Name="Vizor2" SelectionChanged="Vizor2_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="1" Style="{StaticResource StyleListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding File}"/>
@@ -93,15 +97,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="Исходный текст" Grid.Row="0" Grid.Column="0"  Width="auto" Height="auto" HorizontalAlignment="Center"/>
-            <ScrollViewer CanContentScroll="True"  Grid.Row="1" Grid.Column="0"  Width="530" Height="200" Background="AliceBlue">
-                <TextBox x:Name="VizorWord" TextWrapping="Wrap" Background="AliceBlue" IsReadOnly="True"/>
+            <Label Content="Исходный текст" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
+            <ScrollViewer CanContentScroll="True"  Grid.Row="1" Grid.Column="0"  Width="530" Height="200">
+                <TextBox x:Name="VizorWord" IsReadOnly="True" Style="{StaticResource StyleTextBox}"/>
             </ScrollViewer>
-            <Label Content="Диаграмма" Grid.Row="0" Grid.Column="1"  Width="auto" Height="auto" HorizontalAlignment="Center"/>
+            <Label Content="Диаграмма" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleLabel}"/>
             <WpfPlot x:Name="DiagramView" Width="500" Height="auto" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" />
-            <Label Content="Статистика" Grid.Row="2" Grid.Column="0"  Width="auto" Height="auto" HorizontalAlignment="Center"/>
+            <Label Content="Статистика" Grid.Row="2" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
             <ScrollViewer CanContentScroll="True" Width="530" Height="160" Grid.Row="3" Grid.Column="0"  >
-                <TextBox x:Name="WindowSearch" TextWrapping="Wrap" Background="AliceBlue" IsReadOnly="True"/>
+                <TextBox x:Name="WindowSearch" IsReadOnly="True" Style="{StaticResource StyleTextBox}"/>
             </ScrollViewer>
         </Grid>
     </StackPanel>

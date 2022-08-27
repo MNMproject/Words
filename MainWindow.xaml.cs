@@ -187,8 +187,6 @@ namespace Words
 
         public static List<string> ForbidenWordsList = new();
 
-        
-
         public static string TotalStatistic;
 
         public static string TextInFile;
@@ -213,7 +211,6 @@ namespace Words
             {
                 VizorPath.Text = ListConfig[ListConfig.Count-1].path;
             }
-          
         }
 
         //private void SaveJson()
