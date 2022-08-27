@@ -552,7 +552,7 @@ namespace Words
             }
             progresCount = 0;
             WindowSearch.Text = TotalStatistic;
-            DiagramRound();
+            AllDiagrams();
         }
 
         //private static void WrireFile(string textFile, string fileName)
@@ -671,26 +671,48 @@ namespace Words
         //    //new ScottPlot.FormsPlotViewer(plt).ShowDialog();
         //}
 
-        private void DiagramRound()
+        private void SearchDiagramRound_Click(object sender, RoutedEventArgs e)
+        {
+            SearchDiagramRound.IsChecked = true;
+            SearchDiagramColumn.IsChecked = false;
+            SearchDiagramRadius.IsChecked = false;
+            AllDiagrams();
+        }
+
+        private void SearchDiagramColumn_Click(object sender, RoutedEventArgs e)
+        {
+            SearchDiagramRound.IsChecked = false;
+            SearchDiagramColumn.IsChecked = true;
+            SearchDiagramRadius.IsChecked = false;
+            AllDiagrams();
+        }
+
+        private void SearchDiagramRadius_Click(object sender, RoutedEventArgs e)
+        {
+            SearchDiagramRound.IsChecked = false;
+            SearchDiagramColumn.IsChecked = false;
+            SearchDiagramRadius.IsChecked = true;
+            AllDiagrams();
+        }
+
+        private void AllDiagrams()
         {
             if (ListLog.Count > 0)
             {
-                DiagramView.Reset();
-                double[] values = new double[ListLog.Count];
-                string[] word = new string[ListLog.Count];
-                for (int i = 0; i < ListLog.Count; i++)
+                ScottPlot.WpfPlot diagramma = DiagramView;
+                if (SearchDiagramRound.IsChecked == true)
                 {
-                    values[i] = ListLog[i].CountWord;
-                    word[i] = ListLog[i].Word;
+                    Diagrams.RoundDiagram(diagramma);
                 }
-
-                var pie = DiagramView.Plot.AddPie(values);
-                pie.Explode = true;
-                pie.SliceLabels = word;
-                pie.ShowLabels = true;
-                pie.ShowPercentages = true;
-                pie.ShowValues = true;
-                DiagramView.Refresh();
+                else if (SearchDiagramColumn.IsChecked == true)
+                {
+                    Diagrams.ColumnDiagram(diagramma);
+                }
+                else if (SearchDiagramRadius.IsChecked == true)
+                {
+                    Diagrams.RadialDiagram(diagramma);
+                }
+                
             }
             else
             {
@@ -701,7 +723,7 @@ namespace Words
 
         private void Diagram_Click(object sender, RoutedEventArgs e)
         {
-            DiagramRound();
+            AllDiagrams();
         }
 
         private void OpenDirectory_Click(object sender, RoutedEventArgs e)

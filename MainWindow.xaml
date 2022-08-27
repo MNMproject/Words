@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Words" d:DataContext="{d:DesignInstance Type=local:FileList}" 
         mc:Ignorable="d"
         Title="Найдун" 
-        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Width ="1100" Height="800">
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Width ="1100" Height="820">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml"/>
@@ -16,6 +16,11 @@
             <MenuItem Header="Настройки">
                 <MenuItem Header="Задать папку для поиска" Click="SetDirectory_Click"/>
                 <MenuItem Header="Задать папку с запретными словами" Click="DirectoryForbidden"/>
+                <MenuItem Header="Задать тип диаграммы">
+                    <CheckBox x:Name="SearchDiagramRound" Content="Круговая диаграмма" IsChecked="True" Click="SearchDiagramRound_Click" />
+                    <CheckBox x:Name="SearchDiagramColumn" Content="Столбики" IsChecked="False" Click="SearchDiagramColumn_Click"/>
+                    <CheckBox x:Name="SearchDiagramRadius" Content="Радиальная диаграмма" IsChecked="False" Click="SearchDiagramRadius_Click"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <Grid>
@@ -98,14 +103,14 @@
         <ProgressBar x:Name="progressBar" Minimum="0" Maximum="{Binding FileCount}" Height="10"/>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Исходный текст" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
             <ScrollViewer CanContentScroll="True"  Grid.Row="1" Grid.Column="0"  Width="530" Height="200">
