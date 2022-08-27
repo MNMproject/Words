@@ -69,7 +69,6 @@ namespace Words
         {
             ConfigList config = new();
             config.dateTime = DateTime.Now;
-            config.path = ListConfig[ListConfig.Count - 1].path;
             config.pathForbidden = folderDialog.SelectedPath.ToString();
             if (ListConfig.Count > 0)
             {
