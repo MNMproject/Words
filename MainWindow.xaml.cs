@@ -241,7 +241,7 @@ namespace Words
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
             string save = "";
-            StreamWriter data = new("C:/Users/admin/Desktop/ЭкзаменСлова/ForbiddenWord.txt", true);
+            
             foreach (var symbl in EnterText.Text)
             {
                 save += symbl;
@@ -254,12 +254,20 @@ namespace Words
                     save = save.Remove(save.Length - 1);
                 }
             }
-            data.WriteLine(save);
-            data.Close();
-            ForbidenWordsList.Add(save);
-            SaveLoad.SaveJson();
-            //SaveJson();
-            EnterText.Text = "";
+            if(save != "" && save.Length > 1)
+            {
+                StreamWriter data = new("C:/Users/admin/Desktop/ЭкзаменСлова/ForbiddenWord.txt", true);
+                data.WriteLine(save);
+                data.Close();
+                ForbidenWordsList.Add(save);
+                SaveLoad.SaveJson();
+                //SaveJson();
+                EnterText.Text = "";
+            }
+            else
+            {
+                MessageBox.Show($"Пустая строка или один символ!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         //private static void SelectFile(string folderName)
