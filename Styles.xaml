@@ -28,6 +28,11 @@
     <Style x:Key="StyleButton" TargetType="Button">
         <Setter Property="Background" Value="#FFD4C9B6"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Style.Triggers>
+            <Trigger Property= "IsFocused" Value="True">
+                <Setter Property="Background" Value="LemonChiffon"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="StyleListBox" TargetType="ListBox">
         <Setter Property="Background" Value="AliceBlue"/>
