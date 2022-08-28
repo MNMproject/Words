@@ -39,7 +39,7 @@
             <Label Content="Сегодня: " Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource StyleLabel}"/>
             <TextBlock x:Name="Date" Grid.Row="0" Grid.Column="2" Loaded="Window_Loaded" Style="{StaticResource StyleTextBlock}"/>
             <TextBlock x:Name="Time" Grid.Row="0" Grid.Column="3" Style="{StaticResource StyleTextBlock}"/>
-            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource StyleTextBox}" Cursor="Pen"/>
+            <TextBox x:Name="EnterText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource StyleTextBox}" Cursor="Pen" ToolTip="Поле ввода запретных слов"/>
             <Button x:Name="Enter" Content="Ввод" Click="Enter_Click" Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Style="{StaticResource StyleButton}"/>
         </Grid>
         <Grid>
@@ -70,9 +70,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Выбрана директория:" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
-            <TextBlock x:Name="VizorPath" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleTextBlock}"/>
+            <TextBlock x:Name="VizorPath" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleTextBlock}" ToolTip="Поиск слов в этой директории"/>
             <Label Content="Сохранено:" Grid.Row="0" Grid.Column="2" Style="{StaticResource StyleLabel}"/>
-            <TextBlock x:Name="VizorPathForbidden" Grid.Row="0" Grid.Column="3" Style="{StaticResource StyleTextBlock}"/>
+            <TextBlock x:Name="VizorPathForbidden" Grid.Row="0" Grid.Column="3" Style="{StaticResource StyleTextBlock}" ToolTip="Путь сохранения исправленных файлов и списка запретных слов"/>
         </Grid>
         <Grid >
             <Grid.RowDefinitions>
