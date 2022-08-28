@@ -199,10 +199,18 @@ namespace Words
                 //LoadJsonToList(ForbidenWordsList);
                 SaveLoad.LoadJsonToList(ForbidenWordsList);
             }
+            else
+            {
+                MessageBox.Show($"Список запретных сдов пуст", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
             if (File.Exists("config.json"))
             {
                 SaveLoad.LoadConfig(ListConfig);
+            }
+            else
+            {
+                MessageBox.Show($"Выберите дирректорию и {"\n"}папку для запретных слов", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             InitializeComponent();

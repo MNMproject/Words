@@ -12,12 +12,6 @@ namespace Words
 {
     class SaveLoad : MainWindow
     {
-        public static void SaveJson()
-        {
-            string fileName = "ForbiddenList.json";
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(ForbidenWordsList));
-        }
-
         public static void LoadJsonToList(List<string> tempList)
         {
             ForbidenWordsList.Clear();
@@ -32,12 +26,6 @@ namespace Words
             }
         }
 
-        public static void SaveConfig()
-        {
-            string fileName = "config.json";
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(ListConfig));
-        }
-
         public static void LoadConfig(List<ConfigList> templist)
         {
             ListConfig.Clear();
@@ -50,6 +38,18 @@ namespace Words
                     templist.Add(list);
                 }
             }
+        }
+
+        public static void SaveJson()
+        {
+            string fileName = "ForbiddenList.json";
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(ForbidenWordsList));
+        }
+
+        public static void SaveConfig()
+        {
+            string fileName = "config.json";
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(ListConfig));
         }
 
         public static void SaveConfigDirectory(System.Windows.Forms.FolderBrowserDialog folderDialog)
