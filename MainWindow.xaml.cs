@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using Microsoft.Win32;
+using System.Speech.Synthesis;
 
 
 namespace Words
@@ -44,7 +45,7 @@ namespace Words
             set
             {
                 folderUp = value;
-                OnPropertyChanged("folderUp");
+                OnPropertyChanged("FolderUp");
             }
         }
 
@@ -54,7 +55,7 @@ namespace Words
             set
             {
                 folderDown = value;
-                OnPropertyChanged("folderDown");
+                OnPropertyChanged("FolderDown");
             }
         }
 
@@ -64,7 +65,7 @@ namespace Words
             set
             {
                 folderCount = value;
-                OnPropertyChanged("folderCount");
+                OnPropertyChanged("FolderCount");
             }
         }
 
@@ -101,7 +102,7 @@ namespace Words
             set
             {
                 file = value;
-                OnPropertyChanged("Файл");
+                OnPropertyChanged("File");
             }
         }
 
@@ -111,7 +112,7 @@ namespace Words
             set
             {
                 fileName = value;
-                OnPropertyChanged("Файл");
+                OnPropertyChanged("FileName");
             }
         }
 
@@ -121,7 +122,7 @@ namespace Words
             set
             {
                 fileCount = value;
-                OnPropertyChanged("Файл");
+                OnPropertyChanged("FileCount");
             }
         }
 
@@ -131,7 +132,7 @@ namespace Words
             set
             {
                 fileLength = value;
-                OnPropertyChanged("Файл");
+                OnPropertyChanged("FileLength");
             }
         }
 
@@ -153,7 +154,7 @@ namespace Words
         public int CountWord { get; set; }
     }
 
-    public class ConfigList 
+    public class ConfigList
     {
         public DateTime dateTime { get; set; }
         public string path { get; set; }
@@ -179,7 +180,7 @@ namespace Words
         }
 
         public static List<ConfigList> ListConfig = new();
-      
+
         public static List<LogList> ListLog = new();
 
         public static List<LogList> TempListLog = new();
@@ -218,9 +219,11 @@ namespace Words
             Vizor2.ItemsSource = ListFile;
             if (File.Exists("config.json"))
             {
-                VizorPath.Text = ListConfig[ListConfig.Count-1].path;
+                VizorPath.Text = ListConfig[ListConfig.Count - 1].path;
                 VizorPathForbidden.Text = ListConfig[ListConfig.Count - 1].pathForbidden;
             }
+            TotalFolder.DataContext = ListDirectory;
+            progressBar.DataContext= ListFile;
         }
 
         //private void SaveJson()
@@ -251,7 +254,7 @@ namespace Words
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
             string save = "";
-            
+
             foreach (var symbl in EnterText.Text)
             {
                 save += symbl;
@@ -264,9 +267,9 @@ namespace Words
                     save = save.Remove(save.Length - 1);
                 }
             }
-            if((save != "" || save != " ") && save.Length > 2)
+            if ((save != "" || save != " ") && save.Length > 2)
             {
-                StreamWriter data = new(@$"{ListConfig[ListConfig.Count-1].pathForbidden}/ForbiddenWord.txt", true);
+                StreamWriter data = new(@$"{ListConfig[ListConfig.Count - 1].pathForbidden}/ForbiddenWord.txt", true);
                 data.WriteLine(save);
                 data.Close();
                 ForbidenWordsList.Add(save);
@@ -363,7 +366,6 @@ namespace Words
             string dirName = ListConfig[ListConfig.Count - 1].path/*@"C:/Users/admin/Desktop/МТС"*/;
             if (Directory.Exists(dirName))
             {
-                Label_Folder.Visibility = Visibility.Visible;
                 int countFolder = 0;
                 string[] dirs = Directory.GetDirectories(dirName, "", SearchOption.AllDirectories);
                 foreach (string s in dirs)
@@ -378,6 +380,8 @@ namespace Words
                     CreateDirectory(folder);
                     FolderFile.SelectFile(folderName);
                 }
+                TotalFolder.Text = ListDirectory[ListDirectory.Count - 1].FolderCount.ToString();
+                TotalFile.Text = ListFile.Count.ToString();
             }
         }
 
@@ -497,7 +501,7 @@ namespace Words
         {
             ListFile.Clear();
             DirectoryList directory = (DirectoryList)Vizor1.SelectedItem;
-            
+
             if (directory != null)
             {
                 FolderFile.SelectFile(directory.FolderUp);
@@ -509,24 +513,46 @@ namespace Words
 
             FileList directory = (FileList)Vizor2.SelectedItem;
 
-            if(directory != null)
+            if (directory != null)
             {
                 VizorWord.Text = ReadWrite.ReadTXT(directory.File);
             }
         }
 
-        private double progresCount;
+        //private double progresCount;
 
-        void worker_DoWork(object sender, DoWorkEventArgs e)
+        //void worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    progresCount += 100 / ListFile[ListFile.Count - 1].FileCount;
+        //    (sender as BackgroundWorker).ReportProgress((int)Math.Round(progresCount));
+        //    Thread.Sleep(100);
+        //}
+
+        //void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        //{
+        //    progressBar.Value = e.ProgressPercentage;
+        //}
+
+        private async void ProgressBar(int i)
         {
-            progresCount += 100 / ListFile[ListFile.Count - 1].FileCount;
-            (sender as BackgroundWorker).ReportProgress((int)Math.Round(progresCount));
-            Thread.Sleep(100);
+            var progress = new Progress<int>(ReportProgress);
+            await ProgressStat(progress, i);
         }
 
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        public static async Task ProgressStat(IProgress<int> progress, int i)
         {
-            progressBar.Value = e.ProgressPercentage;
+            int count = 0;
+            await Task.Run(() =>
+            {
+                count = (i/ListFile.Count)*100;
+                progress.Report(i);
+                Thread.Sleep(1000);
+            });
+        }
+
+        private void ReportProgress(int value)
+        {
+            progressBar.Value = value;
         }
 
         private void SearchWord_Click(object sender, RoutedEventArgs e)
@@ -535,30 +561,33 @@ namespace Words
             SaveLoad.LoadJsonToList(ForbidenWordsList);
             if (ForbidenWordsList.Count != 0)
             {
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.WorkerReportsProgress = true;
-
+                progressBar.Maximum = ListFile.Count;
+                //BackgroundWorker worker = new BackgroundWorker();
+                //worker.WorkerReportsProgress = true;
+                int i = 0;
                 foreach (var file in ListFile)
                 {
+                    i++;
                     WordSearch.WriteForbiddenWordToFile(file);
-
-                    worker.DoWork += worker_DoWork;
-                    worker.ProgressChanged += worker_ProgressChanged;
+                    
+                    ProgressBar(i);
+                    //worker.DoWork += worker_DoWork;
+                    //worker.ProgressChanged += worker_ProgressChanged;
 
                     //WrireFile(ReadTXT(file.File), $"C:/Users/admin/Desktop/ЭкзаменСлова/{file.FileName}");
                     //WrireFile(Convert.ToString(EditText(file.File)), file.File);
                     VizorWord.Text = TextInFile;
                 }
-                
+
                 ReadWrite.WriteLogStatisticAsync();
-                worker.RunWorkerAsync();
+                //worker.RunWorkerAsync();
             }
             else
             {
                 MessageBox.Show($"Список запрещенных слов пуст. {'\n'} Добавьте хотя бы одно слово", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
                 Keyboard.Focus(EnterText);
             }
-            progresCount = 0;
+            //progresCount = 0;
             WindowSearch.Text = TotalStatistic;
             AllDiagrams();
         }
@@ -720,7 +749,7 @@ namespace Words
                 {
                     Diagrams.RadialDiagram(diagramma);
                 }
-                
+
             }
             else
             {
@@ -760,17 +789,19 @@ namespace Words
             DiagramView.Reset();
             VizorWord.Text = "";
             WindowSearch.Text = "";
+            TotalFile.Text = "";
+            TotalFolder.Text="";
         }
 
         private void SetDirectory_Click(object sender, RoutedEventArgs e)
         {
             var folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            
+
             if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 SaveLoad.SaveConfigDirectory(folderDialog);
                 VizorPath.Text = folderDialog.SelectedPath;
-            }   
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -792,6 +823,22 @@ namespace Words
                 SaveLoad.SaveConfigDirectoryForbidden(folderDialog);
                 VizorPathForbidden.Text = folderDialog.SelectedPath;
             }
+        }
+
+        private SpeechSynthesizer Speacher;
+
+        private void Speak_Click(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesizer synth = new SpeechSynthesizer();
+            synth.SetOutputToDefaultAudioDevice();
+            synth.SpeakAsync(VizorWord.Text);
+            Speacher = synth;
+        }
+
+        private void SpeakStop_Click(object sender, RoutedEventArgs e)
+        {
+            Speacher.Pause();
+            Speacher.Dispose();
         }
     }
 }

@@ -85,20 +85,35 @@
             </Grid.ColumnDefinitions>
             <Label x:Name="Label_Folder" Content="Список Папок:" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
             <Label Content="Список Файлов:" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleLabel}"/>
-            <ListBox x:Name="Vizor1" SelectionChanged="Vizor1_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleListBox}">
+            <ListBox x:Name="Vizor1" SelectionChanged="Vizor1_SelectionChanged" Width="530" Height="180" Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FolderUp}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="Vizor2" SelectionChanged="Vizor2_SelectionChanged" Width="530" Height="190" Grid.Row="1" Grid.Column="1" Style="{StaticResource StyleListBox}">
+            <ListBox x:Name="Vizor2" SelectionChanged="Vizor2_SelectionChanged" Width="530" Height="180" Grid.Row="1" Grid.Column="1" Style="{StaticResource StyleListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding File}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Найдено папок: " Style="{StaticResource StyleLabel}" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock d:DataContext="{d:DesignInstance Type=local:DirectoryList}" x:Name="TotalFolder" Text="{Binding Path=FolderUp}" Style="{StaticResource StyleTextBlock}" Grid.Row="0" Grid.Column="1"/>
+            <Label Content="Найдено файлов: " Style="{StaticResource StyleLabel}" Grid.Row="0" Grid.Column="2"/>
+            <TextBlock x:Name="TotalFile" Text="{Binding FileCount}"  Style="{StaticResource StyleTextBlock}" Grid.Row="0" Grid.Column="3"/>
         </Grid>
         <ProgressBar x:Name="progressBar" Minimum="0" Maximum="{Binding FileCount}" Height="10"/>
         <Grid>
@@ -112,14 +127,26 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Исходный текст" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Исходный текст" Grid.Row="0" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
+                <Button x:Name="Speak" Content="Озвучить" Click="Speak_Click" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleButton}"/>
+                <Button x:Name="SpeakStop" Content="Остановить" Click="SpeakStop_Click" Grid.Row="0" Grid.Column="2" Style="{StaticResource StyleButton}"/>
+            </Grid>
             <ScrollViewer CanContentScroll="True"  Grid.Row="1" Grid.Column="0"  Width="530" Height="200">
                 <TextBox x:Name="VizorWord" IsReadOnly="True" Style="{StaticResource StyleTextBox}"/>
             </ScrollViewer>
             <Label Content="Диаграмма" Grid.Row="0" Grid.Column="1" Style="{StaticResource StyleLabel}"/>
             <WpfPlot x:Name="DiagramView" Width="500" Height="auto" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" />
             <Label Content="Статистика" Grid.Row="2" Grid.Column="0" Style="{StaticResource StyleLabel}"/>
-            <ScrollViewer CanContentScroll="True" Width="530" Height="160" Grid.Row="3" Grid.Column="0"  >
+            <ScrollViewer CanContentScroll="True" Width="530" Height="150" Grid.Row="3" Grid.Column="0"  >
                 <TextBox x:Name="WindowSearch" IsReadOnly="True" Style="{StaticResource StyleTextBox}"/>
             </ScrollViewer>
         </Grid>

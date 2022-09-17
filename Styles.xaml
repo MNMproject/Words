@@ -26,9 +26,12 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
     <Style x:Key="StyleButton" TargetType="Button">
-        <Setter Property="Background" Value="#FFD4C9B6"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="#FFD4C9B6"/>
         <Style.Triggers>
+            <Trigger Property= "IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Tomato"/>
+            </Trigger>
             <Trigger Property= "IsFocused" Value="True">
                 <Setter Property="Background" Value="LemonChiffon"/>
             </Trigger>
